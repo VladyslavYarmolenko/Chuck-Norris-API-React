@@ -1,0 +1,28 @@
+.Main {
+  padding: 40px 0 0 140px; 
+  grid-area: m;
+}
+
+.Top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Label {
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 28px;
+}
+
+.Greet {
+  margin-top: 100px;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 44px;
+}
+
+.Offer {
+  font-size: 32px;
+  line-height: 44px;
+  font-weight: 500;
+}
