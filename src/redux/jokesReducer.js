@@ -4,13 +4,16 @@ const REQUEST_JOKES_START = 'REQUEST_JOKES_START';
 const REQUEST_JOKES_FAILURE = 'REQUEST_JOKES_FAILURE';
 const REQUEST_CATEGORIES_SUCCESS = 'REQUEST_CATEGORIES_SUCCESS';
 const REQUEST_JOKES_SUCCESS = 'REQUEST_JOKES_SUCCESS';
-const REQUEST_JOKES_SEARCH_INPUT_SUCCESS = 'REQUEST_JOKES_SEARCH_INPUT_SUCCESS'
+const REQUEST_JOKES_SEARCH_SUCCESS = 'REQUEST_JOKES_SEARCH_INPUT_SUCCESS';
+const ADD_FAVORITES_JOKE = 'ADD_FAVORITES_JOKE';
+const REMOVE_FAVORITES_JOKE = 'REMOVE_FAVORITES_JOKE';
 
 let initialState = {
   isLoading: false,
   categories: [],
   jokes : [],
   jokesCount: '',
+  favorites: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [], 
 }
 
 
@@ -36,20 +39,48 @@ const jokesReducer = (state = initialState, { type, payload }) => {
       }
 
     case REQUEST_JOKES_SUCCESS:
-      let jokes = [...state.jokes, payload];
+      let jokes = [payload];
       return {
         ...state,
         isLoading: false,
         jokes: jokes,
       }
 
-    case REQUEST_JOKES_SEARCH_INPUT_SUCCESS:
+    case REQUEST_JOKES_SEARCH_SUCCESS:
       return {
         ...state,
         jokes: payload.result,
-        jokesCount: payload.totalCount,
+        jokesCount: payload.total,
       }
 
+    case ADD_FAVORITES_JOKE: {
+      let favoriteJokes = localStorage.getItem('favorites');
+      if (favoriteJokes) {
+        favoriteJokes = JSON.parse(favoriteJokes);
+        favoriteJokes.push(payload)
+      } else {
+        favoriteJokes = [payload];
+      }
+      localStorage.setItem('favorites', JSON.stringify(favoriteJokes))
+      return {
+        ...state,
+        favorites: favoriteJokes,
+      }
+    }
+    case REMOVE_FAVORITES_JOKE: {
+      let favoriteJokes = localStorage.getItem('favorites');
+      if (favoriteJokes) {
+        favoriteJokes = JSON.parse(favoriteJokes);
+        favoriteJokes = favoriteJokes.filter(item => payload.id !== item.id);
+      } else {
+        favoriteJokes = [];
+      }
+      localStorage.setItem('favorites', JSON.stringify(favoriteJokes))
+      return {
+        ...state,
+        favorites: favoriteJokes,
+      }
+    }
     default:
       return state;  
   }
@@ -88,9 +119,10 @@ if (type === 'categories' || type === 'random') {
  axios.get(url, {params: dataObj})
  .then((response) => {
    const data = response.data;
+   
 
 if (type === 'search'){
-    dispatch({ type: REQUEST_JOKES_SEARCH_INPUT_SUCCESS, payload: data})
+    dispatch({ type: REQUEST_JOKES_SEARCH_SUCCESS, payload: data})
 } else {
     dispatch({ type: REQUEST_JOKES_SUCCESS, payload: data});}
  }).catch(function (error) {
@@ -98,5 +130,18 @@ if (type === 'search'){
   })
 }
 
+export const addFavoriteJoke = (jokeObj) => {
+  return {
+    type: ADD_FAVORITES_JOKE,
+    payload: jokeObj,
+  }
+}
 
+
+export const removeFavoriteJoke = (jokeObj) => {
+  return {
+    type: REMOVE_FAVORITES_JOKE,
+    payload: jokeObj,
+  }
+}
 export default jokesReducer;

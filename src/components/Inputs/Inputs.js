@@ -85,7 +85,6 @@ class Inputs extends React.Component {
           </div>
           <button type="submit" className={s.submit}>Get a joke</button>
         </form>
-        {/* { selectedType === 'search' ? jokes[0].result.map(joke => <Joke joke={joke}/>) : jokes.map(joke => <Joke joke={joke}/>)} */}
       </div>
     )
   }

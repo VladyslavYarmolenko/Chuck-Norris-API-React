@@ -1,6 +1,6 @@
 import React from 'react';
 import Inputs from '../Inputs/Inputs';
-import JokesWrap from '../JokesWrap/JokesWrap';
+import JokesWrapper from '../JokesWrap/JokesWrapper';
 import Toggler from '../Toggler/Toggler';
 import s from './Main.module.css';
 
@@ -16,7 +16,7 @@ const Main = (props) => {
         <Toggler/>
       </div>
       <Inputs/>
-      <JokesWrap/>
+      <JokesWrapper/>
     </div>
   )
 }
