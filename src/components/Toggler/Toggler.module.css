@@ -1,6 +1,8 @@
 
 .checkbox_burger {
-  display: block;
+  display: none;
+  z-index: 4;
+  margin-top: 20px;
 }
 
 .burger_menu {
@@ -20,7 +22,6 @@
   margin-left: 10px;
 }
 
-
 .burger_menu+label::before {
   margin-right: 10px;
   content: '';
@@ -36,4 +37,52 @@
 .burger_menu:checked+label::before {
   background-image: url(../../assets/images/close_menu.svg);
   background-size: cover;
+}
+
+.overlay {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 836px){
+  .checkbox_burger{
+    display: block;
+  }
+
+  .checked {
+    display: block;
+    position: relative;
+    left: 38px;
+    bottom: 10px;
+    z-index: 4;
+  }
+}
+
+@media screen and (max-width: 380px){
+  .checkbox_burger{
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+  }
+
+  .checked {
+    display: block;
+    position: absolute;
+    z-index: 4;
+    left: calc(100% - 170px);
+    top: 40px;
+  }
 }

@@ -26,3 +26,16 @@
   line-height: 44px;
   font-weight: 500;
 }
+
+@media screen and (max-width: 836px){
+  .Main {
+   width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 380px){
+  .Main {
+    padding: 10px;
+   }
+}

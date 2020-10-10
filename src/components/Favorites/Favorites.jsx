@@ -6,8 +6,10 @@ import s from './Favorites.module.css';
 
 const Favorites = (props) => {
 
+ const { burgerIsChecked } = props;
+
   return (
-    <div className={s.Favor}>
+    <div className={ burgerIsChecked ? s.Favor_visible : s.Favor }>
       {props.favorites.map(joke => <Joke joke = {joke}/>)}
     </div>
   )
@@ -16,6 +18,7 @@ const Favorites = (props) => {
 const mapStateToProps = (state) => {
   return({
     favorites: state.jokesReducer.favorites,
+    burgerIsChecked: state.jokesReducer.burgerIsChecked,
   })
 }
 

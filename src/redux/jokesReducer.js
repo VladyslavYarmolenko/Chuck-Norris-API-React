@@ -7,13 +7,15 @@ const REQUEST_JOKES_SUCCESS = 'REQUEST_JOKES_SUCCESS';
 const REQUEST_JOKES_SEARCH_SUCCESS = 'REQUEST_JOKES_SEARCH_INPUT_SUCCESS';
 const ADD_FAVORITES_JOKE = 'ADD_FAVORITES_JOKE';
 const REMOVE_FAVORITES_JOKE = 'REMOVE_FAVORITES_JOKE';
+const FAVORITES_SHOW = 'FAVORITES_SHOW'
 
 let initialState = {
   isLoading: false,
   categories: [],
   jokes : [],
   jokesCount: '',
-  favorites: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [], 
+  favorites: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [],
+  burgerIsChecked: false,
 }
 
 
@@ -81,8 +83,15 @@ const jokesReducer = (state = initialState, { type, payload }) => {
         favorites: favoriteJokes,
       }
     }
+
+    case FAVORITES_SHOW:
+      return {
+        ...state, 
+        burgerIsChecked: payload,
+      }
+      
     default:
-      return state;  
+      return state;
   }
 }
 
@@ -144,4 +153,14 @@ export const removeFavoriteJoke = (jokeObj) => {
     payload: jokeObj,
   }
 }
+
+export const favoritesShow = (boolean) => {
+  return {
+    type: FAVORITES_SHOW,
+    payload: boolean,
+  }
+  
+}
+
+
 export default jokesReducer;
